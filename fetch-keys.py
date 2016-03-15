@@ -1,6 +1,7 @@
 import boto3
 import os
 import StringIO
+import sys
 from subprocess import call
 
 client = boto3.client('dynamodb')
@@ -10,17 +11,22 @@ table = os.environ['KEY_TABLE']
 application = os.environ['APPLICATION']
 service = os.environ['SERVICE']
 home = os.environ['HOME']
+response = None
 
-response = client.query(
-    TableName=table,
-    KeyConditionExpression='Application_Service = :applicationServiceName',
-    ExpressionAttributeValues={
-        ':applicationServiceName': {
-            'S': application + '#' + service
-        }
-    },
-    ConsistentRead=True
-)
+try:
+    response = client.query(
+        TableName=table,
+        KeyConditionExpression='Application_Service = :applicationServiceName',
+        ExpressionAttributeValues={
+            ':applicationServiceName': {
+                'S': application + '#' + service
+            }
+        },
+        ConsistentRead=True
+    )
+except Exception as problem:
+    print 'DynamoDb Query Error'
+    sys.exit()
 
 def combineHostStrings(lastOne, nextOne):
     return lastOne + ' ' + nextOne
