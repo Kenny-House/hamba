@@ -18,7 +18,8 @@ response = client.query(
         ':applicationServiceName': {
             'S': application + '#' + service
         }
-    }
+    },
+    ConsistentRead=True
 )
 
 def combineHostStrings(lastOne, nextOne):

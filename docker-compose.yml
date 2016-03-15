@@ -6,8 +6,6 @@ services:
       - "8000:8000"
     networks:
       - "public"
-    volumes:
-      - "./fetch-keys.py:/run/fetch-keys.py"
     environment:
       AWS_ACCESS_KEY_ID: $SATCHEL_AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY: $SATCHEL_AWS_SECRET_ACCESS_KEY

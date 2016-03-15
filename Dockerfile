@@ -8,6 +8,6 @@ RUN apk update && \
  && pip install boto3
 
 ADD hamba /usr/local/bin/hamba
+ADD fetch-keys.py /run/fetch-keys.py
 ENV HOME /run
-VOLUME /run
 ENTRYPOINT ["hamba"]
