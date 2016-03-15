@@ -28,6 +28,7 @@ main () {
     while : ; do
         while ! [ -f ~/haproxy.new ]; do
             sleep 1
+            python ~/fetch-keys.py
         done
         echo "Found haproxy.new."
         mv ~/haproxy.new ~/haproxy.chk
@@ -137,6 +138,9 @@ reconfigure)
     mv ~/haproxy.tmp ~/haproxy.new
     ;;
 run)
+    if [ -f ~/.config ]; then
+      rm ~/.config
+    fi
     shift
     if [ -n "$1" ]; then
         echo "Initial HAProxy configuration was provided."
@@ -167,4 +171,3 @@ showconfig)
     main
     ;;
 esac
-

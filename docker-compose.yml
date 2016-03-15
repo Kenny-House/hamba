@@ -1,0 +1,21 @@
+version: "2"
+services:
+  hamba:
+    build: .
+    ports:
+      - "8000:8000"
+    networks:
+      - "public"
+    volumes:
+      - "./fetch-keys.py:/run/fetch-keys.py"
+    environment:
+      AWS_ACCESS_KEY_ID: $SATCHEL_AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $SATCHEL_AWS_SECRET_ACCESS_KEY
+      AWS_DEFAULT_REGION: 'us-east-1'
+      KEY_TABLE: "ServiceDiscoveryDev"
+      APPLICATION: "HambaTest"
+      SERVICE: "CNN"
+      PORT: '8000'
+    command: "run"
+networks:
+  public:
